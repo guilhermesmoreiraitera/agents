@@ -1,0 +1,3 @@
+# Default owner for everything in the repo - required reviewer for the
+# Acceptance gate (see tech-lead agent / SDLC artifact table).
+* @guilhermesmoreiraitera

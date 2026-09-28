@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Test
+        run: |
+          if find . -iname '*.Tests.csproj' -o -iname '*Test*.csproj' | grep -q .; then
+            dotnet test --no-restore --configuration Release
+          else
+            echo "No test project found yet - skipping. qa-engineer/developer should add one."
+          fi
